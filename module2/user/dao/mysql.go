@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/LannisterAlwaysPaysHisDebts/lesson38/module2/user/conf"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
@@ -11,11 +13,11 @@ import (
 var db *gorm.DB
 
 // 初始化mysql连接
-func InitMysql(host, port, user, password, dbName string) (err error) {
+func InitMysql(dbConf conf.Db) (err error) {
 	db, err = gorm.Open("mysql",
 		// user:password@tcp(host:port)/dbName?charset=utf8&parseTime=True&loc=Local
 		fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&loc=Local",
-			user, password, host, port, dbName))
+			dbConf.User, dbConf.Passwd, dbConf.Host, dbConf.Port, dbConf.DbName))
 	if err != nil {
 		log.Println(err)
 		return

@@ -2,27 +2,29 @@ package dao
 
 import (
 	"testing"
+
+	"github.com/LannisterAlwaysPaysHisDebts/lesson38/module2/user/conf"
 )
 
 func TestUserDAOImpl_Save(t *testing.T) {
 	userDAO := &UserDAOImpl{}
-	
-	err := InitMysql("localhost", "3306", "root", "root", "testdb")
-	if err != nil{
+
+	err := InitMysql(conf.InitLocalDb())
+	if err != nil {
 		t.Error(err)
 		t.FailNow()
 	}
 
 	// 初始化用户实例
 	user := &UserEntity{
-		Username:"aoho",
-		Password:"aoho",
-		Email:"aoho@mail.com",
+		Username: "aoho",
+		Password: "aoho",
+		Email:    "aoho@mail.com",
 	}
 
 	// 保存
 	err = userDAO.Save(user)
-	if err != nil{
+	if err != nil {
 		t.Error(err)
 		t.FailNow()
 	}
@@ -32,14 +34,14 @@ func TestUserDAOImpl_Save(t *testing.T) {
 func TestUserDAOImpl_SelectByEmail(t *testing.T) {
 	userDAO := &UserDAOImpl{}
 
-	err := InitMysql("127.0.0.1", "3306", "root", "root", "testdb")
-	if err != nil{
+	err := InitMysql(conf.InitLocalDb())
+	if err != nil {
 		t.Error(err)
 		t.FailNow()
 	}
 
 	user, err := userDAO.SelectByEmail("aoho@mail.com")
-	if err != nil{
+	if err != nil {
 		t.Error(err)
 		t.FailNow()
 	}
