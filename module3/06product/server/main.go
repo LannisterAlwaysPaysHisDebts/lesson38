@@ -1,8 +1,6 @@
 package main
 
 import (
-	"strconv"
-
 	common "github.com/LannisterAlwaysPaysHisDebts/lesson38/module3/05common"
 	"github.com/LannisterAlwaysPaysHisDebts/lesson38/module3/06product/domain/repository"
 	service2 "github.com/LannisterAlwaysPaysHisDebts/lesson38/module3/06product/domain/service"
@@ -47,8 +45,7 @@ func main() {
 
 	// 数据库
 	mysqlInfo := common.GetMysqlFromConsul(consulConfig, "mysql")
-	dbArgs := mysqlInfo.User + ":" + mysqlInfo.Pwd + "@tcp(" + mysqlInfo.Host + ":" + strconv.FormatInt(mysqlInfo.Port, 10) + ")/" + mysqlInfo.Database + "?charset=utf8&parseTime=True&loc=Local"
-	db, err := gorm.Open("mysql", dbArgs)
+	db, err := gorm.Open("mysql", common.GetMysqlDSN(*mysqlInfo))
 	if err != nil {
 		log.Error(err)
 	}
